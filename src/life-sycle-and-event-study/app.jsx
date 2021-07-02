@@ -24,6 +24,30 @@ class App extends Component {
                 }
             ]
         }
+        console.log(document.querySelector('h1'));
+        console.log('App 컴포넌트 생성 시점', props, this.state);
+        //return this;
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('state,props 파생(디라이브) 시점.');
+        //return {컴포넌트 state 업데이트해준다.}
+        return {
+            infrequentlyUsed: true
+        };
+    }
+    // static getDerivedStateFromError(error) {
+    //     return {
+    //         hasError: true,
+    //     }
+    // }
+    otherMember() {
+        console.log('other member!!@');
+    }
+    handleLinkClick = (e) => {
+        console.log(e.target);
+        console.log(this);
+        this.otherMember();
     }
     render() {
         //리액트 요소이다 즉, 아직 실제 dom 요소가 아니라 돔 조작 불가.
@@ -41,7 +65,19 @@ class App extends Component {
             </div>
         )
     }
-   
+    componentDidMount() {
+        //가상돔이 실제 dom에 마운트 된 후.
+        //돔요소에 마운트 된 후 
+
+    }
 }
+
+// 
+// 라이프 사이클 메서드	설명 (2.업데이트)
+// static getDerivedStateFromProps()(opens new window)	전달된 상태 및 속성을 가져와 설정하는 시점에 호출 (업데이트)
+// shouldComponentUpdate()(opens new window)	컴포넌트 업데이트 예정 시점에 호출 (업데이트 하거나, 안 하거나)
+// render()(opens new window)	컴포넌트 렌더링 (업데이트)
+// getSnapshotBeforeUpdate()(opens new window)	컴포넌트 업데이트 전 스냅샷 가져오는 시점에 호출
+// componentDidUpdate()(opens new window)	컴포넌트 업데이트 이후 시점에 호출
 
 export default App;
