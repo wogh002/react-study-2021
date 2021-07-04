@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './index.css';
-import LectureContext from './context/lectureContext';
-import AppHeader from './layout/appHeader';
-import AppMain from './layout/appMain';
-
+import Lecturers from './lectures';
 class App extends Component {
     //컴포넌트는 외부로부터 props 를 전달받는다
     constructor(props) {
@@ -37,17 +34,15 @@ class App extends Component {
     }
     render() {
         //리액트 요소이다 즉, 아직 실제 dom 요소가 아니라 돔 조작 불가.
-        // const { FEML_lecturers } = this.state;
         return (
-            <LectureContext.Provider value={{
-                lectures: this.state.FEML_lecturers,
-                removeLecture: this.removeLecturer,
-            }}>
-                <div className="app">
-                    <AppHeader title='강사진' />
-                    <AppMain />
-                </div>
-            </LectureContext.Provider>
+            <div className="app">
+                <h1>
+                    <a href="https://ko.reactjs.org/" rel="noopener noreferrer" target="_blank">
+                        Front -End Masters 강사진
+                    </a>
+                </h1>
+                <Lecturers instructors={this.state.FEML_lecturers} handleRemoveLecturer={this.removeLecturer} />
+            </div>
         )
     }
 
