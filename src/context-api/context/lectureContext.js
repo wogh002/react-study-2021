@@ -1,7 +1,7 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 export const LectureContext = {
-    lecturers: [],
-    removeLecture: () => { },
-}
+  lecturers: [],
+  removeLecture: () => {},
+};
 export default createContext(LectureContext);
