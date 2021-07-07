@@ -1,54 +1,91 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import "./index.css";
-import LectureContext from "./context/lectureContext";
-import AppHeader from "./layout/appHeader";
-import AppMain from "./layout/appMain";
-const FEML_lecturers = [
-  {
-    id: "lecturer-az01871",
-    name: "김데레사",
-    facebook: "https://ko.reactjs.org/docs/events.html",
-    module: "A",
-    image: "https://yamoo9.github.io/images/photo-yamoo@2x.png",
-  },
-  {
-    id: "lecturer-az08888",
-    name: "야무",
-    module: "B,C",
-    facebook: "https://ko.reactjs.org/docs/events.html",
-    image: "https://yamoo9.github.io/images/photo-yamoo@2x.png",
-  },
-];
-
-function App() {
-  const [lecturers, setLecturers] = useState(FEML_lecturers);
-  // const [isVisibleDialog,setIsVisibleDialog] = useState(false);
-  // const [editingLecturer,setEditingLecturer] = useState(null);
-
-  const removeLecturer = (removeId) => {
-    setLecturers(lecturers.filter((item) => item.id !== removeId));
-  };
-  // const editLecturer= (editId,changedLecturer) => {
-  //   setLecturers(lecturers.map(lecturer => (lecturer.id===editId ? changedLecturer:lecturer)));
-  // }
-  // const showDialog = (lecturerId)=>{
-  //   setIsVisibleDialog(true);
-  //   setEditingLecturer(lecturers.find(lecturer=>lecturer.id === lecturerId));
-  // }
-  // const hideDialog = ()=>{
-  //   setIsVisibleDialog(false);
-  //   setEditingLecturer(null);
-  // }
-  return (
-    <LectureContext.Provider
-      value={{
-        lecturers,
-        removeLecturer,
-      }}
-    >
-      <AppHeader title="강사진" />
-      <AppMain />
-    </LectureContext.Provider>
-  );
+import UserList from "./userList";
+import CreateUser from "./createUser";
+function countActiveUsers(users) {
+  console.log("활성 사용자 수를 세는중 ...");
+  return users.filter((user) => user.active).length;
 }
+const App = () => {
+  const [inputs, setInputs] = useState({
+    userName: "",
+    email: "",
+  });
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      userName: "jaeho",
+      email: "ekekekekek@gmail.com",
+      active: false,
+    },
+    {
+      id: 2,
+      userName: "ham",
+      email: "eke@gmail.com",
+      active: false,
+    },
+    {
+      id: 3,
+      userName: "tataatata",
+      email: "ekekekekek@gmail.com",
+      active: false,
+    },
+  ]);
+  const { userName, email } = inputs;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+  const onReset = () => {
+    setInputs({
+      userName: "",
+      email: "",
+    });
+  };
+  const onToggle = (id) => {
+    setUsers(
+      users.map((user) =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  };
+  //. 반면 useRef로 감싸진 current가 가리키는 값은 React에 의해 기억되기에
+  // 직접 변경하기 전까지 해당 컴포넌트가 호출될 때마다 동일합니다.
+  const nextId = useRef(3);
+
+  const onCreate = () => {
+    const user = {
+      id: (nextId.current += 1),
+      ...inputs,
+    };
+    // setUsers(users.concat(user)); 배열을 합쳐준다. 추가된 새로운 배열을 반환합니다.
+    setUsers([...users, user]);
+    onReset();
+  };
+  const onRemove = (removeId) => {
+    setUsers(users.filter((user) => user.id !== removeId));
+  };
+  //useMemo는 deps가 변경되었을 때에만 메모이제이션된 값만 다시 계산 할 것입니다.
+  //변경이 되지 않았다면 이전에 만들어 놓았던 것을 재사용.
+  const count = useMemo(() => countActiveUsers(users), [users]);
+
+  return (
+    <>
+      <CreateUser
+        userName={userName}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
+      <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
+      <div>
+        <h1>활성 사용자 수 : {count}</h1>
+      </div>
+    </>
+  );
+};
 export default App;
