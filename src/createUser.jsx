@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useRef, memo } from "react";
 
-const CreateUser = ({ userName, email, onChange, onCreate }) => {
+const CreateUser = memo(({ userName, email, onChange, onCreate }) => {
+  console.log("Create user");
+  const userId = useRef();
   return (
     <div>
       <input
+        ref={userId}
         name="userName"
         placeholder="계정명"
         onChange={onChange}
@@ -16,9 +19,16 @@ const CreateUser = ({ userName, email, onChange, onCreate }) => {
         onChange={onChange}
         value={email}
       />
-      <button onClick={onCreate}>등록</button>
+      <button
+        onClick={() => {
+          userId.current.focus();
+          onCreate();
+        }}
+      >
+        등록
+      </button>
     </div>
   );
-};
+});
 
 export default CreateUser;
