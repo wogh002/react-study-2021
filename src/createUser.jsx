@@ -1,12 +1,31 @@
-import React, { useRef, memo } from "react";
+import React, { useRef, useCallback, useContext } from "react";
+import useInputs from "./useInputs";
+import { UserDispatch } from "./app";
+const CreateUser = () => {
+  const dispatch = useContext(UserDispatch);
 
-const CreateUser = memo(({ userName, email, onChange, onCreate }) => {
-  console.log("Create user");
-  const userId = useRef();
+  const [form, onChange, reset] = useInputs({
+    userName: "",
+    email: "",
+  });
+  const { userName, email } = form;
+  const nextId = useRef(3);
+
+  const onCreate = () => {
+    dispatch({
+      type: "CREATE_USER",
+      user: {
+        id: (nextId.current += 1),
+        userName,
+        email,
+      },
+    });
+    reset();
+  };
+  console.log("CreateUser");
   return (
     <div>
       <input
-        ref={userId}
         name="userName"
         placeholder="계정명"
         onChange={onChange}
@@ -21,7 +40,6 @@ const CreateUser = memo(({ userName, email, onChange, onCreate }) => {
       />
       <button
         onClick={() => {
-          userId.current.focus();
           onCreate();
         }}
       >
@@ -29,6 +47,6 @@ const CreateUser = memo(({ userName, email, onChange, onCreate }) => {
       </button>
     </div>
   );
-});
+};
 
 export default CreateUser;

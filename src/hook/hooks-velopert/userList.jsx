@@ -1,12 +1,17 @@
 import React, { memo } from "react";
 import User from "./user";
 const UserList = memo(
-  ({ users }) => {
+  ({ users, onRemove, onToggle }) => {
     console.log("UserList");
     return (
       <ul>
         {users.map((item) => (
-          <User user={item} key={users.id} />
+          <User
+            user={item}
+            key={users.id}
+            onRemove={onRemove}
+            onToggle={onToggle}
+          />
         ))}
       </ul>
     );
