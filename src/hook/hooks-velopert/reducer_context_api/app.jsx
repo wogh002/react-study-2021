@@ -2,7 +2,8 @@ import React, { useRef, useReducer, createContext, useCallback } from "react";
 import "./index.css";
 import UserList from "./userList";
 import CreateUser from "./createUser";
-
+export const UserDispatch = createContext(null);
+//dispatch 를 관리하고자 하는 컨텍스트 생성.
 function countActiveUsers(users) {
   console.log("활성 사용자 수를 세는중 ...");
   return users.filter((user) => user.active).length;
@@ -49,8 +50,6 @@ const reducer = (state, action) => {
       return state;
   }
 };
-export const UserDispatch = createContext(null);
-//dispatch 를 관리하고자 하는 컨텍스트 생성.
 
 const App = () => {
   console.log("APPP");

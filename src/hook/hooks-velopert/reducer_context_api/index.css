@@ -1,0 +1,25 @@
+.ally-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  white-space: nowrap;
+}
+.bordered {
+  padding: 1rem;
+  border: 1px solid currentColor;
+}
+.bordered-red {
+  border-color: #ff1744;
+}
+.bordered-green {
+  border-color: #1de9b6;
+}
+.bordered-blue {
+  border-color: #0066ff;
+}
+.rounded {
+  border-radius: 10px;
+}
