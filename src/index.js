@@ -2,12 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./app";
-import { Provider } from "react-redux";
+import { countReducer } from "./module/counter";
 import { createStore } from "redux";
-import rootReducer from "./modules"; //index생략가능
-import { composeWithDevTools } from "redux-devtools-extension";
-
-const store = createStore(rootReducer, composeWithDevTools());
+import { Provider } from "react-redux";
+const store = createStore(countReducer);
 ReactDOM.render(
   <Provider store={store}>
     <App />

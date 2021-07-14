@@ -1,6 +1,12 @@
 import React from "react";
-import CounterContainer from "./containers/counterContainer";
+import CounterContainer from "./counterContainer";
 
-const App = (props) => <CounterContainer />;
+const App = () => {
+  return (
+    <section>
+      <CounterContainer />
+    </section>
+  );
+};
 
 export default App;
