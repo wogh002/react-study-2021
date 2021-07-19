@@ -6,7 +6,6 @@ const INCREASE = "counter/INCREASE";
 const DECREASE = "counter/DECREASE";
 
 //액션 생성함수
-//상태를 어떻게 업데이트 할지에 대한 정보.
 export const setDiff = (diff) => ({
   type: SET_DIFF,
   diff,
