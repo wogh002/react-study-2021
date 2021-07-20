@@ -1,11 +1,12 @@
 import React, { useCallback } from "react";
-import Todos from "../components/todos";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, toggleTodo } from "../modules/todos";
+import Todos from "../components/todos";
 
 const TodosContainer = () => {
-  //디스패치 될 때 selector 함수가 이전결과와 같다면  useSelector() 훅 캐시된 결과 반환 렌더(x).
+  //useSelector 훅을 이용해 state를 가져오자.
   const todos = useSelector((state) => state.todos);
+  //useDispatch() 훅을가져오자
   const dispatch = useDispatch();
   const onCreate = useCallback((text) => dispatch(addTodo(text)), [dispatch]);
   const onToggle = useCallback((id) => dispatch(toggleTodo(id)), [dispatch]);

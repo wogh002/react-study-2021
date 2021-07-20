@@ -1,33 +1,35 @@
+//노예이름
 const ADD_TODO = "todos/ADD_TODO";
 const TOGGLE_TODO = "todos/TOGGLE_TODO";
-
-//액션생성함수
-let nextId = 1;
+//노예들이 할 일
+let nextId = 0;
 export const addTodo = (text) => ({
   type: ADD_TODO,
   todo: {
-    id: nextId++,
     text,
+    id: ++nextId,
   },
 });
 export const toggleTodo = (id) => ({
   type: TOGGLE_TODO,
   id,
 });
-
-const initalState = [
-  //{ id: 1, text: "예시", done: false }
+//초기 state
+export const initalState = [
+  //{text:'aa' , id:1 , done : false }
 ];
 
+//리듀서
 export default function todos(state = initalState, action) {
   switch (action.type) {
-    case ADD_TODO:
+    case ADD_TODO: {
       return [...state, action.todo];
-    case TOGGLE_TODO:
-      //불변성을 지키면서 done을 반전시켜줘야한다.
+    }
+    case TOGGLE_TODO: {
       return state.map((todo) =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo
       );
+    }
     default:
       return state;
   }
